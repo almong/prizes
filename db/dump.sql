@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Сен 25 2018 г., 21:55
+-- Время создания: Сен 25 2018 г., 22:10
 -- Версия сервера: 5.7.23-0ubuntu0.18.04.1
 -- Версия PHP: 7.2.10-0ubuntu0.18.04.1
 
@@ -104,7 +104,7 @@ CREATE TABLE `users` (
   `id` int(5) NOT NULL,
   `login` varchar(25) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `bonus` int(11) NOT NULL
+  `bonus` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -112,7 +112,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `bonus`) VALUES
-(1, 'admin', '$2y$10$Acjhx8nYl8biFhdHLUb/wu88naizkz.BCmHK1WN3vZh7kty1mVn.q', 0);
+(1, 'admin', '$2y$10$Acjhx8nYl8biFhdHLUb/wu88naizkz.BCmHK1WN3vZh7kty1mVn.q', 0),
+(2, 'test', '$2y$10$qoYPIxrZHfFDiKT59XhI1unt.Kw5w4wkKEucX.sw04Zjj5Z4HSfZu', 0);
 
 -- --------------------------------------------------------
 
@@ -195,7 +196,7 @@ ALTER TABLE `money`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `win`
 --
