@@ -33,7 +33,7 @@
                     DELETE FROM `win` WHERE `user_id` = '{$_SESSION['logged_user']}'";
             $preSql = $db->prepare($sql);
             $preSql->execute();
-        }   
+        }  
+        $db=null; 
         header('Location: /');
-    $db=null;
     }
