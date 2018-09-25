@@ -13,23 +13,18 @@
     //Получаем имя таблицы совпадающее с именем класса
     $tabName = ($prizes[$typePrize]);
     $className = ucfirst($tabName);
-    $sql = ($tabName != 'item') ? "SELECT * FROM $tabName" : "SELECT count(*) FROM $tabName";
+    $sql = ($tabName != 'item') ? "SELECT * FROM $tabName" : "SELECT count(*) FROM $tabName WHERE count > 0";
     
     $row = $className::getRange($sql, $db); // получаем значения min/max_range
+    if ($row['max_range'] < $row['min_range']){
+        echo $className.' Error';
+        die; //Здесь должно быть исключение приза у которого кончился лимит из лотереи.
+    }
     $winPrize = new $className($tabName, $row);
     $win = $winPrize->random();
     
-    print_r($winPrize);
-    echo $win;
-//Выигрыш - Деньги
-    if (get_class($winPrize) == 'Money'){
-        require '../template/moneywin.php';
-    }
-//Выигрыш - Бонусы
-    if (get_class($winPrize) == 'Bonus'){
-        require '../template/bonuswin.php';
-    }
-//Выигрыш - Предмет
     if (get_class($winPrize) == 'Item'){
-        require '../template/Itemwin.php';
+        $win = $winPrize->getItemName($win, $db);
     }
+    $winPrize->savePrize($_SESSION['logged_user'], $win, $db);
+    require '../template/'.$tabName.'win.php';

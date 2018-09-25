@@ -7,12 +7,12 @@
         $sqlLogin = "SELECT * FROM users WHERE `login` = '{$_POST['login']}'";
         $preSql = $db->prepare($sqlLogin);
         $preSql->execute();
-        $loginArr = $preSql->fetchALL(PDO::FETCH_ASSOC);
+        $loginArr = $preSql->fetch(PDO::FETCH_ASSOC);
 
         if (!empty($loginArr)){
-                if (password_verify($_POST['password'], $loginArr['0']['password'])){
-                    $id = $loginArr['0']['id'];
-                    $_SESSION['logged_user'] = $loginArr['0'];
+                if (password_verify($_POST['password'], $loginArr['password'])){
+                    $id = $loginArr['id'];
+                    $_SESSION['logged_user'] = $id;
                     header('LOCATION: /index.php');
                     die;
                 } 

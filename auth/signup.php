@@ -8,7 +8,7 @@
         $preSql = $db->prepare($sql);
         $preSql->execute();
 
-        if ($preSql->fetchALL(PDO::FETCH_ASSOC)){
+        if ($preSql->fetch(PDO::FETCH_ASSOC)){
             return true;
         } else {
             return false;
