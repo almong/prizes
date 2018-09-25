@@ -10,38 +10,26 @@
     //Определяем тип приза: деньги, бонусы или предмет
     $typePrize = rand(0, count($prizes)-1);
 
-    //Заполняем объект данными
     //Получаем имя таблицы совпадающее с именем класса
     $tabName = ($prizes[$typePrize]);
+    $className = ucfirst($tabName);
+    $sql = ($tabName != 'item') ? "SELECT * FROM $tabName" : "SELECT count(*) FROM $tabName";
     
-    function getRange($sql, $db){
-        $preSql = $db->prepare($sql);
-        $preSql->execute(); 
-        return $preSql->fetch(PDO::FETCH_ASSOC);
-    }
-
-    function newPrize($tabName, $row){
-        $className = ucfirst($tabName);
-        return new $className($row);
-    }
-
-    if ($tabName != 'item'){
-    $sql = "SELECT * FROM $tabName";
-        $arr = getRange($sql, $db);
-        $row = ['name' => $tabName,
-                'min_range' => $arr['min_range'],
-                'max_range' => $arr['max_range']
-        ];
-        $prize = newPrize($tabName,$row);
-    }else {
-        $sql = "SELECT count(*) FROM $tabName";
-        $arr = getRange($sql, $db);
-        $row = ['name' => $tabName,
-                'min_range' => 0,
-                'max_range' => $arr['count(*)']
-        ];
-        $prize = newPrize($tabName,$row);
-    }
-    echo $prize->random();
+    $row = $className::getRange($sql, $db); // получаем значения min/max_range
+    $winPrize = new $className($tabName, $row);
+    $win = $winPrize->random();
     
-    // print_r(get_class($prize[$typePrize]));
+    print_r($winPrize);
+    echo $win;
+//Выигрыш - Деньги
+    if (get_class($winPrize) == 'Money'){
+        require '../template/moneywin.php';
+    }
+//Выигрыш - Бонусы
+    if (get_class($winPrize) == 'Bonus'){
+        require '../template/bonuswin.php';
+    }
+//Выигрыш - Предмет
+    if (get_class($winPrize) == 'Item'){
+        require '../template/Itemwin.php';
+    }
