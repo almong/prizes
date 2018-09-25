@@ -1,0 +1,33 @@
+h1 {
+    font-size: 24px;
+    color: rgb(83, 83, 83);
+    text-align: center;
+}
+
+h3 {
+    font-size: 20px;
+    color: rgb(52, 184, 0);
+    text-align: center; 
+}
+
+button {
+    display: block;
+    width: 150px;
+    height: 25px;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 5px;
+}
+
+input {
+    display: block;
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    margin: auto;
+}
+
+p {
+    text-align: center;
+    font-size: 16px;
+}

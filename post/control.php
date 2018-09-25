@@ -29,7 +29,6 @@
             $preSql = $db->prepare($sql);
             $preSql->execute();
             $name = $preSql->fetch(PDO::FETCH_ASSOC)['prize'];
-            echo $name;
             $sql = "UPDATE `item` SET `count` = `count`+'1' WHERE `name` = '$name';
                     DELETE FROM `win` WHERE `user_id` = '{$_SESSION['logged_user']}'";
             $preSql = $db->prepare($sql);

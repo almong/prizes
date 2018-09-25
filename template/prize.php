@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style/style.css">
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="/js/ajax.js"></script>
 </head>

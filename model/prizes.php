@@ -17,7 +17,6 @@
     
     $row = $className::getRange($sql, $db); // получаем значения min/max_range
     if ($row['max_range'] < $row['min_range']){
-        echo $className.' Error';
         die; //Здесь должно быть исключение приза у которого кончился лимит из лотереи.
     }
     $winPrize = new $className($tabName, $row);
