@@ -11,15 +11,16 @@
             $this->minRange = $row['min_range'];
             $this->maxRange = $row['max_range'];
         }
-
+//Поиск случайного значения в диапазоне
         function random()
         {
             return rand($this->minRange, $this->maxRange);            
         }
      }
-
+//Класс приза - Деньги
     class Money extends Main
     {
+//Конвертация из денег в баллы с использованием коэффициента
         public function convert($user, $win, $db)
         {
             $coefficient = 10;
@@ -30,7 +31,7 @@
             $preSql = $db->prepare($sql);
             $preSql->execute();
         }
-
+//Запись выигрыша в БД
         public function savePrize($user, $win, $db)
         {
             $sql = "SELECT max_range, `count` FROM `money`";
@@ -47,14 +48,14 @@
                 //Действия при недостатке денежных средств
             }
         }
-
+//Получаем из БД диапазон для случайного значения
         public function getRange($sql, $db){
             $preSql = $db->prepare($sql);
             $preSql->execute(); 
             return $preSql->fetch(PDO::FETCH_ASSOC);
         }
     }
-
+//Класс приза - Баллы
     class Bonus extends Main
     {
         public function getRange($sql, $db){
@@ -62,7 +63,7 @@
             $preSql->execute(); 
             return $preSql->fetch(PDO::FETCH_ASSOC);
         }
-
+//Получаем из БД диапазон для случайного значения
         public function savePrize($user, $win , $db)
         {
             $sql = "UPDATE users SET bonus = bonus + $win WHERE id = $user";
@@ -70,16 +71,17 @@
             $preSql->execute(); 
         }
     }
-
+//Класс приза - Предмет
     class Item extends Main
     {
+//Получаем из БД диапазон для случайного значения
         public function getRange($sql, $db){
             $preSql = $db->prepare($sql);
             $preSql->execute(); 
             $arr = $preSql->fetch(PDO::FETCH_ASSOC);
             return array('min_range' => 0, 'max_range' => $arr['count(*)']-1);
         }
-
+//Получаем название предмета
         public function getItemName($win, $db)
         {
             $sql = "SELECT * FROM item WHERE count > 0";
@@ -88,6 +90,7 @@
             $arr = $preSql->fetchAll(PDO::FETCH_ASSOC);
             return $arr[$win]['name'];
         }
+//Получаем из БД диапазон для случайного значения
 
         public function savePrize($user, $win , $db)
         {

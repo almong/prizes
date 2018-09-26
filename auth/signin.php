@@ -1,14 +1,14 @@
 <?php
 //Соединение с БД
     require '../db/db.php';    
-
+//Ищем пользователя в БД
     if (!empty($_POST)){
         $errors = array();
         $sqlLogin = "SELECT * FROM users WHERE `login` = '{$_POST['login']}'";
         $preSql = $db->prepare($sqlLogin);
         $preSql->execute();
         $loginArr = $preSql->fetch(PDO::FETCH_ASSOC);
-
+//Проверяем пароль
         if (!empty($loginArr)){
                 if (password_verify($_POST['password'], $loginArr['password'])){
                     $id = $loginArr['id'];
